@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms" 
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml" 
+             xmlns:imgctrl="clr-namespace:ImageCircle.Forms.Plugin.Abstractions;assembly=ImageCircle.Forms.Plugin.Abstractions"
+             x:Class="AMChat.ItemsPage" 
+             Title="Agendamate Chat" 
+             x:Name="ChatItemsPage">
+
+    <ContentPage.Content>
+
+    <StackLayout Orientation="Vertical" VerticalOptions="FillAndExpand" Margin="0,0,0,0" BackgroundColor="White">
+                    
+        <StackLayout Orientation="Vertical" VerticalOptions="FillAndExpand" HorizontalOptions="FillAndExpand" BackgroundColor="White" Margin="10,0,10,0">
+
+            <StackLayout x:Name="ChatHeader" Orientation="Horizontal" >
+                <imgctrl:CircleImage  HeightRequest="50" WidthRequest="50" Margin="0,10,0,0" Aspect="AspectFill" 
+                                      HorizontalOptions="Center" VerticalOptions="Center" Source="kitten_one.png" />
+
+                <imgctrl:CircleImage HeightRequest="50" WidthRequest="50" Margin="0,10,0,0" Aspect="AspectFill"
+                                     HorizontalOptions="Center" VerticalOptions="Center" Source="kitten_two.png" />
+            </StackLayout>
+                
+            <BoxView Color="#a7a9ac" HeightRequest="1" HorizontalOptions="FillAndExpand" />
+
+            <ListView  x:Name="MsgList" HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand" 
+                       ItemSelected="Handle_ItemSelected" 
+                       HasUnevenRows="true" SeparatorColor="Transparent" ItemsSource="{Binding Items}" >
+
+                <ListView.ItemTemplate >
+                    <DataTemplate>
+                        <ViewCell>
+
+                            <StackLayout Orientation="Horizontal" VerticalOptions="CenterAndExpand" HorizontalOptions="StartAndExpand" >
+
+                                <imgctrl:CircleImage HeightRequest="50" WidthRequest="50" Aspect="AspectFill"
+                                                     HorizontalOptions="Start" Margin="0,10,0,0" 
+                                                     VerticalOptions="Center" Source="{Binding ContraChatViewer}" />
+
+                                <StackLayout Orientation="Vertical" VerticalOptions="StartAndExpand" Margin="0,10,0,0">
+                                        
+                                    <Frame BackgroundColor="{StaticResource LightBackgroundColor}" WidthRequest="400">
+                                        <Frame.HasShadow>
+                                            <OnPlatform x:TypeArguments="x:Boolean" iOS="false" Android="true"/>
+                                        </Frame.HasShadow>
+                                            
+                                        <!-- StackLayout -->
+                                            <Label  LineBreakMode="WordWrap" MinimumHeightRequest="50" 
+                                                    Text="{Binding ChatText}" VerticalOptions="Center" Margin="0,0,0,0"
+                                                    TextColor="{StaticResource MediumGrayTextColor}" />
+                                        <!-- /StackLayout -->
+                                    </Frame>
+
+                                </StackLayout>
+                                
+                                <imgctrl:CircleImage HeightRequest="50" WidthRequest="50" Aspect="AspectFill" 
+                                                     HorizontalOptions="End" Margin="0,10,0,5"
+                                                     VerticalOptions="Center" Source="{Binding ChatViewer}" />
+                            </StackLayout>
+                            
+                        </ViewCell>
+                    </DataTemplate>
+                </ListView.ItemTemplate>
+                <ListView.Footer >
+                    <Label HeightRequest="0"/>
+                </ListView.Footer>                
+            </ListView>
+        </StackLayout>
+
+        <StackLayout x:Name="InputChatField" Orientation="Vertical" VerticalOptions="End" Padding="0">
+            <Grid ColumnSpacing="1" Padding="10,5,5,5" BackgroundColor="#E6E7EB">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="*" />
+                </Grid.RowDefinitions>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="75" />
+                </Grid.ColumnDefinitions>
+            
+                <Editor x:Name="ChatMessage" Grid.Column="0" HeightRequest="-1" VerticalOptions="Start"
+                        Focused="ScrollUp" Completed="ScrollDown" Keyboard="Chat"/>
+                <Button Text="Send" Grid.Column="1" Clicked="SendMessage" VerticalOptions="Start"
+                        TextColor="{StaticResource Accent}" FontAttributes="Bold"  BackgroundColor="Transparent"  />
+            </Grid>
+        </StackLayout>
+            
+     </StackLayout>
+                 
+    </ContentPage.Content>
+</ContentPage>
